@@ -1,0 +1,29 @@
+const express = require("express");
+const controller = require("../controllers/game.controller");
+const { catchErrors } = require("../helpers");
+
+const router = express.Router();
+
+/**
+ * ROUTES
+ *
+ * POST / - Création d'un jeu
+ *
+ * GET / - Récupere les infos de tous les jeux
+ * GET /:id - Récupere les infos du jeu correspondant à l'id
+ *
+ * PUT /:id - Met à jour les infos du jeu correspondant à l'id
+ *
+ * DELETE /:id - Supprime le jeu correspondant à l'id
+ */
+
+router.post("/", catchErrors(controller.createGame));
+
+router.get("/", catchErrors(controller.getAllGames));
+router.get("/:id", catchErrors(controller.getGameByid));
+
+router.put("/:id", catchErrors(controller.updateGameById));
+
+router.delete("/:id", catchErrors(controller.deleteGameById));
+
+module.exports = router;
