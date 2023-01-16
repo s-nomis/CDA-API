@@ -8,6 +8,7 @@ const userRouter = require("./routers/user.router");
 const gameRouter = require("./routers/game.router");
 const extensionRouter = require("./routers/extension.router");
 const tagRouter = require("./routers/tag.router");
+const ratingRouter = require("./routers/rating.router");
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use("/api/users", userRouter);
 app.use("/api/games", gameRouter);
 app.use("/api/games/:id", extensionRouter);
 app.use("/api/tags", tagRouter);
+app.use("/api/ratings", ratingRouter);
 
 app.use(errorHandler);
 
