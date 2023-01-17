@@ -1,5 +1,5 @@
 const express = require("express");
-
+const controller = require("../controllers/extension.controller");
 const { catchErrors } = require("../helpers");
 
 const router = express.Router();
@@ -17,13 +17,13 @@ const router = express.Router();
  * DELETE /:id - Supprime l'extension d'un jeu correspondant à l'id
  */
 
-router.post("/", catchErrors());
+router.post("/", catchErrors(controller.createExtension));
 
-router.get("/", catchErrors());
-router.get("/:id", catchErrors());
+router.get("/", catchErrors(controller.getAllExtension));
+router.get("/:id", catchErrors(controller.getExtensionByid));
 
-router.put("/:id", catchErrors());
+router.put("/:id", catchErrors(controller.updateExtensionById));
 
-router.delete("/:id", catchErrors());
+router.delete("/:id", catchErrors(controller.deleteExtensionById));
 
 module.exports = router;

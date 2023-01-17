@@ -17,13 +17,13 @@ const router = express.Router();
  * DELETE /:id - Supprime le jeu correspondant à l'id
  */
 
-router.post("/", catchErrors(controller.createGame));
+router.post("/", auth, catchErrors(controller.createGame));
 
 router.get("/", catchErrors(controller.getAllGames));
 router.get("/:id", catchErrors(controller.getGameByid));
 
-router.put("/:id", catchErrors(controller.updateGameById));
+router.put("/:id", auth, catchErrors(controller.updateGameById));
 
-router.delete("/:id", catchErrors(controller.deleteGameById));
+router.delete("/:id", auth, catchErrors(controller.deleteGameById));
 
 module.exports = router;
