@@ -2,6 +2,7 @@ exports.errorHandler = (err, req, res, next) => {
     console.log(err._message);
     console.log(err.name);
     console.log(err.message);
+    console.log(err)
 
     //Voir si possible d'unifier les messages d'erreur pour une meilleure gestion d'erreur
 

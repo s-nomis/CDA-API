@@ -1,30 +1,27 @@
 const express = require("express");
-const controller = require("../controllers/router.controller");
-const auth = require("../middlewares/auth");
+const controller = require("../controllers/rating.controller");
 const { catchErrors } = require("../helpers");
-
 const router = express.Router();
 
 /**
  * ROUTES
  *
- * POST / - Création d'une note
+ * POST / - Création d'un Rating
  *
- * GET / - Récupere les infos de toutes les notes
- * GET /:id - Récupere les infos de la note correspondant à l'id
+ * GET / - Récupere les infos de tous les Ratings existant
+ * GET /:id - Récupere les infos d'un Rating correspondant à l'id
  *
- * PUT /:id - Met à jour les infos de la note correspondant à l'id
+ * PUT /:id - Met à jour les infos d'un Rating correspondant à l'id
  *
- * DELETE /:id - Supprime la note correspondant à l'id
+ * DELETE /:id - Supprime le Rating correspondant à l'id
  */
 
-router.post("/", auth, catchErrors(controller.createRating));
+router.post("/", controller.createRating);
 
-router.get("/", catchErrors(controller.getAllRatins));
-router.get("/:id", catchErrors(controller.getRatingByid));
+router.get("/:id", controller.getRatingByid);
 
-router.put("/:id", auth, catchErrors(controller.updateRatingById));
+router.put("/:id", controller.updateRatingById);
 
-router.delete("/:id", auth, catchErrors(controller.deleteRatingById));
+router.delete("/:id", controller.deleteRatingById);
 
 module.exports = router;
