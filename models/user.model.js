@@ -29,6 +29,18 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        games: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: "Game",
+            }
+        ],
+        extensions: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: "Extension",
+            }
+        ],
     },
     {
         timestamps: true,

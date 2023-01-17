@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const Extension = require("../models/extension.model");
 
 /**
  * POST
@@ -10,7 +11,7 @@ const User = require("../models/user.model");
  * GET
  * getAllUsers - FAIT
  * getUserById - FAIT
- * getUserGames
+ * getUserGames - FAIT
  * getUserExtensions
  *
  * PUT
@@ -46,6 +47,30 @@ exports.getUserById = async (req, res) => {
 
     res.status(200).json(user);
 };
+
+exports.getUserGames = async (req, res) => {
+    const user = await User.findById(req.params.id).populate("games");
+
+    if (!user) {
+        throw new Error("Utilisateur introuvable");
+    }
+    if (user.games.length === 0 ) {
+        throw new Error("Pas de jeu dans la base");
+    }
+    res.status(200).json(user);
+};
+
+exports.getUserExtensions = async (req, res) => {
+    const user = await User.findById(req.params.id).populate("extensions");
+
+    if (!user) {
+        throw new Error("Utilisateur introuvable");
+    }
+    if (user.extensions.length === 0 ) {
+        throw new Error("Pas d'extension dans la base");
+    }
+    res.status(200).json(user);
+}
 
 exports.updateUserById = async (req, res) => {
     //Check si l'email est déjà utilisé par un autre user
