@@ -29,6 +29,18 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        games: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: "Game",
+            },
+        ],
+        extensions: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: "Extension",
+            },
+        ],
     },
     {
         timestamps: true,
@@ -63,8 +75,11 @@ userSchema.pre("save", async function (next) {
 //Pas d'arrow function pour pouvoir acceder à this
 async function validateEmail(email) {
     const user = await this.constructor.findOne({ email });
-    if (user) {
-        throw new Error("L'adresse email est dèjà utilisée");
+
+    if (user._id.toString() !== this._id.toString()) {
+        if (user) {
+            throw new Error("L'adresse email est dèjà utilisée");
+        }
     }
 }
 
@@ -77,7 +92,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-        throw new Error("invalide");
+        throw new Error("Identifiants invalides");
     }
 
     return user;
@@ -89,6 +104,12 @@ userSchema.methods.generateAuthToken = function () {
     });
 
     return token;
+};
+
+userSchema.methods.isPasswordCorrect = async function (password) {
+    const isMatch = await bcrypt.compare(password, this.password);
+
+    return isMatch;
 };
 
 const User = mongoose.model("User", userSchema);
