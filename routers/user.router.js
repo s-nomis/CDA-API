@@ -40,7 +40,12 @@ router.post(
 router.post("/:id/premium", auth, catchErrors(controller.setPremium));
 
 router.get("/", auth, catchErrors(controller.getAllUsers));
+
 router.get("/:id", auth, catchErrors(controller.getUserById));
+
+router.get("/:id/games", auth, catchErrors(controller.getUserGames));
+
+router.get("/:id/extensions", auth, catchErrors(controller.getUserExtensions));
 
 router.put("/:id", auth, catchErrors(controller.updateUserById));
 router.put(
