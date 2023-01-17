@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const Rating = require("./rating.model");
-const Tag = require("./tag.model");
 
 const gameSchema = new mongoose.Schema(
     {
