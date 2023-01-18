@@ -1,7 +1,6 @@
 const Extension = require("../models/extension.model");
 const Game = require("../models/game.model");
 const User = require("../models/user.model");
-const Extension = require("../models/extension.model");
 
 /**
  * POST
