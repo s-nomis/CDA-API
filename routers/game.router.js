@@ -1,5 +1,6 @@
 const express = require("express");
 const controller = require("../controllers/game.controller");
+const auth = require("../middlewares/auth");
 const { catchErrors } = require("../helpers");
 const auth = require("../middlewares/auth");
 const router = express.Router();

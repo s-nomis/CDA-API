@@ -16,75 +16,43 @@ const Tag = require("../models/tag.model");
  */
 
 exports.createTag = async (req, res) => {
-    try {
-        const tag = new Tag({
-            ...req.body,
-        });
+    const tag = new Tag({
+        ...req.body,
+    });
 
-        await tag.save();
+    await tag.save();
 
-        res.status(201).json(tag);
-    } catch (err) {
-        res.status(400).json({
-            message: err.message,
-        });
-    }
+    res.status(201).json(tag);
 };
 
 exports.getAllTags = async (req, res) => {
-    try {
-        const tags = await Tag.find({});
+    const tags = await Tag.find({});
 
-        res.status(200).json(tags);
-    } catch (err) {
-        res.status(400).json({
-            message: err.message,
-        });
-    }
+    res.status(200).json(tags);
 };
 
 exports.getTagById = async (req, res) => {
-    try {
-        const tag = await Tag.findById(req.params.id);
+    const tag = await Tag.findById(req.params.id);
 
-        if (!tag) {
-            return res.status(404).json({
-                message: "Tag introuvable",
-            });
-        }
-
-        res.status(200).json(tag);
-    } catch (err) {
-        res.status(400).json({
-            error: err.message,
-        });
+    if (!tag) {
+        throw new Error("Tag introuvable");
     }
+
+    res.status(200).json(tag);
 };
 
 exports.updateTagById = async (req, res) => {
-    try {
-        const tag = await Tag.findByIdAndUpdate(
-            req.params.id,
-            { ...req.body },
-            { returnDocument: "after" }
-        );
+    const tag = await Tag.findByIdAndUpdate(
+        req.params.id,
+        { ...req.body },
+        { returnDocument: "after" }
+    );
 
-        res.status(200).json(tag);
-    } catch (err) {
-        res.status(400).json({
-            error: err.message,
-        });
-    }
+    res.status(200).json(tag);
 };
 
 exports.deleteTagById = async (req, res) => {
-    try {
-        await Tag.findByIdAndDelete(req.params.id);
+    await Tag.findByIdAndDelete(req.params.id);
 
-        res.status(200).json();
-    } catch (err) {
-        res.status(400).json({
-            error: err.message,
-        });
-    }
+    res.status(200).json();
 };
