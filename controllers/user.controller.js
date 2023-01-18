@@ -6,24 +6,22 @@ const Extension = require("../models/extension.model");
 /**
  * POST
  * createUser - FAIT
- * addGameToLibrary
- * addExtensionToLibrary
- * setPremium
+ * addGameToLibrary - FAIT
+ * addExtensionToLibrary - FAIT
+ * setPremium - FAIT
  *
  * GET
  * getAllUsers - FAIT
  * getUserById - FAIT
- * getUserGames - FAIT
- * getUserExtensions
  *
  * PUT
  * updateUserById - FAIT
- * updatePassword
+ * updatePassword - FAIT
  *
  * DELETE
  * deleteUserById - FAIT
- * deleteGameToLibrary
- * deleteExtensionToLibrary
+ * deleteGameToLibrary - FAIT
+ * deleteExtensionToLibrary - FAIT
  */
 
 exports.createUser = async (req, res) => {
@@ -103,7 +101,21 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.getUserById = async (req, res) => {
-    const user = await User.findById(req.params.id);
+    // parametres dans l'url pour populate ou non les jeux et les extensions
+    // ex: /api/users/:id/?games=true&extensions=false
+    const { games, extensions } = req.query;
+    const gamesBool = games === "true";
+    const extensionsBool = extensions === "true";
+
+    const user = await User.findOne({ _id: req.params.id });
+
+    if (gamesBool) {
+        await user.populate("games");
+    }
+
+    if (extensionsBool) {
+        await user.populate("extensions");
+    }
 
     if (!user) {
         throw new Error("Utilisateur introuvable");
@@ -138,6 +150,14 @@ exports.getUserExtensions = async (req, res) => {
 
 exports.updateUserById = async (req, res) => {
     //Check si l'email est déjà utilisé par un autre user
+    if (
+        req.user._id.toString() !== req.params.id ||
+        req.user.role !== "ADMIN"
+    ) {
+        // return res.status(403).json();
+        throw new Error("Acces non autorisé");
+    }
+
     if (req.body.email) {
         const existingUser = await User.findOne({
             email: req.body.email,
@@ -189,6 +209,11 @@ exports.updateUserPasswordById = async (req, res) => {
 };
 
 exports.deleteUserById = async (req, res) => {
+    if (req.user._id.toString() !== req.params.id) {
+        // return res.status(403).json();
+        throw new Error("Acces non autorisé");
+    }
+
     await User.findOneAndDelete(req.params.id);
 
     res.status(200).json();
@@ -205,7 +230,7 @@ exports.deleteGameFromLibrary = async (req, res) => {
     });
 
     await req.user.save();
-    // console.log(req.user);
+
     res.status(200).json(req.user);
 };
 
@@ -220,6 +245,6 @@ exports.deleteExtensionFromLibrary = async (req, res) => {
     });
 
     await req.user.save();
-    // console.log(req.user);
+
     res.status(200).json(req.user);
 };

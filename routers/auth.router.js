@@ -13,6 +13,6 @@ const router = express.Router();
  */
 
 router.post("/login", catchErrors(controller.login));
-router.post("/logout", catchErrors(controller.logout));
+router.post("/logout", auth, catchErrors(controller.logout));
 
 module.exports = router;
