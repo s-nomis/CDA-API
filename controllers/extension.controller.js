@@ -24,15 +24,17 @@ exports.createExtension = async (req, res) => {
 };
 
 exports.getAllExtension = async (req, res) => {
-    const extension = await Extension.find(req.params.game_id);
+    console.log(req.params.game_id);
+    const extension = await Extension.find();
 
     res.status(200).json(extension);
 };
 
+// find extensionBYId l'id est l'id du jeu sur lequel on veut les extensions
 exports.getExtensionByid = async (req, res) => {
-    const extension = await Extension.findById(req.params.game_id);
+    const extension = await Extension.find({ game_id: req.params.game_id });
 
-    if (!Extension) {
+    if (!extension) {
         throw new Error("Jeu introuvable");
     }
 
