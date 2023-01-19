@@ -29,7 +29,7 @@ exports.getAllGames = async (req, res) => {
     res.status(200).json(games);
 };
 
-exports.getGameByid = async (req, res) => {
+exports.getGameById = async (req, res) => {
     const game = await Game.findById(req.params.id);
 
     if (!game) {
