@@ -1,6 +1,7 @@
 const express = require("express");
 const controller = require("../controllers/extension.controller");
 const { catchErrors } = require("../helpers");
+const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
@@ -20,10 +21,11 @@ const router = express.Router();
 router.post("/", catchErrors(controller.createExtension));
 
 router.get("/", catchErrors(controller.getAllExtension));
-router.get("/:id", catchErrors(controller.getExtensionByid));
+router.get("/:id", catchErrors(controller.getExtensionById));
+router.get("/barcode/:id", catchErrors(controller.getExtensionByBarcode));
 
-router.put("/:id", catchErrors(controller.updateExtensionById));
+router.put("/:id", auth, catchErrors(controller.updateExtensionById));
 
-router.delete("/:id", catchErrors(controller.deleteExtensionById));
+router.delete("/:id", auth, catchErrors(controller.deleteExtensionById));
 
 module.exports = router;

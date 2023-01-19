@@ -17,7 +17,6 @@ const User = require("../models/user.model");
  */
 
 exports.createRating = async (req, res) => {
-
     const game = await Game.findById(req.params.id);
 
     if (!game) {
@@ -25,7 +24,6 @@ exports.createRating = async (req, res) => {
     }
 
     const rating = new Rating({ ...req.body, owner_id: req.user._id, game_id: game.id});
-
     await rating.save();
 
     res.status(201).json(rating);

@@ -1,10 +1,8 @@
 exports.errorHandler = (err, req, res, next) => {
-    console.log(err._message);
-    console.log(err.name);
-    console.log(err.message);
-    console.log(err)
-
-    //Voir si possible d'unifier les messages d'erreur pour une meilleure gestion d'erreur
+    // console.log(err._message);
+    // console.log(err.name);
+    // console.log(err.message);
+    // console.log(err);
 
     /* Erreur mongoose
     {
@@ -31,8 +29,15 @@ exports.errorHandler = (err, req, res, next) => {
     {
         "name": "Error",
         "message": "Jeu introuvable"
+        "statusCode": 400
     }
     */
+
+    // Si _message n'est pas présent, on est sur une de nos erreurs
+    // Si _message est présent, on est sur une erreur de validation de mongoose
+    if (!err._message) {
+        return res.status(err.statusCode).json(err.message);
+    }
 
     res.status(500).json(err);
 };

@@ -23,6 +23,8 @@ router.post("/", auth, catchErrors(controller.createGame));
 router.get("/", catchErrors(controller.getAllGames));
 
 router.get("/:id", catchErrors(controller.getGameByid));
+router.get("/:id/extensions", catchErrors(controller.getGameExtensions));
+router.get("/barcode/:id", catchErrors(controller.getGameByBarcode));
 
 router.put("/:id", auth, catchErrors(controller.updateGameById));
 

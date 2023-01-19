@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const APIError = require("../errors/APIError");
 
 const userSchema = new mongoose.Schema(
     {
@@ -61,8 +62,9 @@ userSchema.pre("save", async function (next) {
         );
 
         if (!regex.test(this.password)) {
-            throw new Error(
-                "Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial"
+            throw new APIError(
+                "Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial",
+                401
             );
         }
 
@@ -78,7 +80,7 @@ async function validateEmail(email) {
 
     if (user._id.toString() !== this._id.toString()) {
         if (user) {
-            throw new Error("L'adresse email est dèjà utilisée");
+            throw new APIError("L'adresse email est dèjà utilisée", 401);
         }
     }
 }
@@ -87,12 +89,12 @@ userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-        throw new Error("Identifiants invalides");
+        throw new APIError("Identifiants invalides", 401);
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-        throw new Error("Identifiants invalides");
+        throw new APIError("Identifiants invalides", 401);
     }
 
     return user;
