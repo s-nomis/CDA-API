@@ -1,3 +1,4 @@
+const APIError = require("../errors/APIError");
 const Extension = require("../models/extension.model");
 
 /**
@@ -24,16 +25,26 @@ exports.createExtension = async (req, res) => {
 };
 
 exports.getAllExtension = async (req, res) => {
-    const extension = await Extension.find(req.params.game_id);
+    const extension = await Extension.find({});
 
     res.status(200).json(extension);
 };
 
-exports.getExtensionByid = async (req, res) => {
-    const extension = await Extension.findById(req.params.game_id);
+exports.getExtensionById = async (req, res) => {
+    const extension = await Extension.findById(req.params.id);
 
-    if (!Extension) {
-        throw new Error("Jeu introuvable");
+    if (!extension) {
+        throw new APIError("Extension introuvable", 404);
+    }
+
+    res.status(200).json(extension);
+};
+
+exports.getExtensionByBarcode = async (req, res) => {
+    const extension = await Extension.find({ barcode: req.params.id });
+
+    if (!extension) {
+        throw new APIError("Extension introuvable", 404);
     }
 
     res.status(200).json(extension);
@@ -49,7 +60,7 @@ exports.updateExtensionById = async (req, res) => {
     );
 
     if (!Extension) {
-        throw new Error("Utilisateur introuvable");
+        throw new APIError("Extension introuvable", 404);
     }
 
     res.status(200).json(extension);

@@ -1,5 +1,6 @@
 const express = require("express");
 const controller = require("../controllers/tag.controller");
+const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
@@ -16,13 +17,13 @@ const router = express.Router();
  * DELETE /:id - Supprime le tag correspondant à l'id
  */
 
-router.post("/", controller.createTag);
+router.post("/", auth, controller.createTag);
 
 router.get("/", controller.getAllTags);
 router.get("/:id", controller.getTagById);
 
-router.put("/:id", controller.updateTagById);
+router.put("/:id", auth, controller.updateTagById);
 
-router.delete("/:id", controller.deleteTagById);
+router.delete("/:id", auth, controller.deleteTagById);
 
 module.exports = router;
