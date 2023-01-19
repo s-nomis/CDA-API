@@ -18,9 +18,13 @@ const router = express.Router();
  * DELETE /:id - Supprime le Rating correspondant à l'id
  */
 
-router.post("/:id/ratings", auth, catchErrors(controller.createRating));
+router.post("/game/:id/ratings", auth, catchErrors(controller.createGameRating));
 
-router.get("/:id/ratings", catchErrors(controller.getAllRatings));
+router.post("/extension/:id/ratings", auth, catchErrors(controller.createExtensionRating));
+
+router.get("/game/:id/ratings", catchErrors(controller.getAllGameRatings));
+
+router.get("/extension/:id/ratings", catchErrors(controller.getAllExtensionRatings));
 
 router.put("/:id", auth, catchErrors(controller.updateRatingById));
 
