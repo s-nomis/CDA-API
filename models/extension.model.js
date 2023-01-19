@@ -68,7 +68,7 @@ const extensionSchema = mongoose.Schema(
 extensionSchema.virtual("ratings", {
     ref: "Rating",
     localField: "_id",
-    foreignField: "game_id",
+    foreignField: "extension_id",
 });
 
 const Extension = mongoose.model("Extension", extensionSchema);

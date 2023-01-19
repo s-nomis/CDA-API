@@ -21,7 +21,12 @@ const ratingSchema = mongoose.Schema(
         game_id: {
             type: mongoose.Types.ObjectId,
             ref: "Game",
-            required: true,
+            // required: true,
+        },
+        extension_id: {
+            type: mongoose.Types.ObjectId,
+            ref: "Extension",
+            // required: true,
         },
     },
     {
