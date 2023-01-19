@@ -1,3 +1,4 @@
+const APIError = require("../errors/APIError");
 const Tag = require("../models/tag.model");
 
 /**
@@ -35,7 +36,7 @@ exports.getTagById = async (req, res) => {
     const tag = await Tag.findById(req.params.id);
 
     if (!tag) {
-        throw new Error("Tag introuvable");
+        throw new APIError("Tag introuvable", 404);
     }
 
     res.status(200).json(tag);

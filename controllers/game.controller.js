@@ -1,3 +1,5 @@
+const APIError = require("../errors/APIError");
+const Extension = require("../models/extension.model");
 const Game = require("../models/game.model");
 
 /**
@@ -33,7 +35,25 @@ exports.getGameByid = async (req, res) => {
     const game = await Game.findById(req.params.id);
 
     if (!game) {
-        throw new Error("Jeu introuvable");
+        throw new APIError("Jeu introuvable", 404);
+    }
+
+    res.status(200).json(game);
+};
+
+exports.getGameExtensions = async (req, res) => {
+    const extensions = await Extension.find({ game_id: req.params.id });
+    if (!extensions) {
+        throw new APIError("Jeu introuvable", 404);
+    }
+
+    res.status(200).json(extensions);
+};
+
+exports.getGameByBarcode = async (req, res) => {
+    const game = await Game.find({ barcode: req.params.id });
+    if (!game) {
+        throw new APIError("Jeu introuvable", 404);
     }
 
     res.status(200).json(game);
@@ -49,7 +69,7 @@ exports.updateGameById = async (req, res) => {
     );
 
     if (!game) {
-        throw new Error("Utilisateur introuvable");
+        throw new APIError("Jeu introuvable", 404);
     }
 
     res.status(200).json(game);

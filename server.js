@@ -20,10 +20,10 @@ app.use(express.json());
 app.use("/api", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/games", gameRouter);
-app.use("/api/games/:id/extensions", extensionRouter);
 app.use("/api/extensions", extensionRouter);
 app.use("/api/tags", tagRouter);
-app.use("/api/ratings", ratingRouter);
+
+app.use("/api/games/:id/ratings", ratingRouter);
 
 app.use(errorHandler);
 

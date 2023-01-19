@@ -18,7 +18,7 @@ const Rating = require("../models/rating.model");
 exports.createRating = async (req, res) => {
     const rating = new Rating({ ...req.body });
 
-    await Rating.save();
+    await rating.save();
 
     res.status(201).json(rating);
 };

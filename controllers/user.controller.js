@@ -34,19 +34,16 @@ exports.createUser = async (req, res) => {
 exports.addGameToLibrary = async (req, res) => {
     // On utilise toString() pour comparer la valeur de l'id avec le param dans l'url
     if (req.user._id.toString() !== req.params.userId) {
-        // return res.status(403).json();
-        throw new Error("Acces non autorisé");
+        throw new APIError("Acces non autorisé", 403);
     }
 
     const game = await Game.findById(req.params.gameId);
     if (!game) {
-        // return res.status(404).json();
-        throw new Error("Jeu introuvable");
+        throw new APIError("Acces non autorisé", 404);
     }
 
     if (req.user.games.includes(game._id.toString())) {
-        // return res.status(400).json();
-        throw new Error("Jeu déjà présent dans la ludothèque de l'utilisateur");
+        throw new APIError("Acces non autorisé", 400);
     }
 
     req.user.games.push(game._id);
@@ -57,21 +54,20 @@ exports.addGameToLibrary = async (req, res) => {
 
 exports.addExtensionToLibrary = async (req, res) => {
     // On utilise toString() pour comparer la valeur de l'id avec le param dans l'url
-    if (req.user._id.toString() !== req.params.userId) {
-        // return res.status(403).json();
-        throw new Error("Acces non autorisé");
+    if (req.user._id.toString() !== req.params.id) {
+        throw new APIError("Acces non autorisé", 403);
     }
 
     const extension = await Extension.findById(req.params.extensionId);
     if (!extension) {
-        // return res.status(404).json();
-        throw new Error("Extension introuvable");
+        throw new APIError("Extension introuvable", 404);
     }
 
     if (req.user.extensions.includes(extension._id.toString())) {
         // return res.status(400).json();
-        throw new Error(
-            "Extension déjà présente dans la ludothèque de l'utilisateur"
+        throw new APIError(
+            "Extension déjà présente dans la ludothèque de l'utilisateur",
+            404
         );
     }
 
@@ -83,8 +79,7 @@ exports.addExtensionToLibrary = async (req, res) => {
 
 exports.setPremium = async (req, res) => {
     if (req.user._id.toString() !== req.params.id) {
-        // return res.status(403).json();
-        throw new Error("Acces non autorisé");
+        throw new APIError("Acces non autorisé", 403);
     }
 
     req.user.premium = !req.user.premium;
@@ -117,7 +112,7 @@ exports.getUserById = async (req, res) => {
     }
 
     if (!user) {
-        throw new Error("Utilisateur introuvable");
+        throw new APIError("Utilisateur introuvable", 404);
     }
 
     res.status(200).json(user);
@@ -125,12 +120,8 @@ exports.getUserById = async (req, res) => {
 
 exports.updateUserById = async (req, res) => {
     //Check si l'email est déjà utilisé par un autre user
-    if (
-        req.user._id.toString() !== req.params.id ||
-        req.user.role !== "ADMIN"
-    ) {
-        // return res.status(403).json();
-        throw new Error("Acces non autorisé");
+    if (req.user._id.toString() !== req.params.id) {
+        throw new APIError("Acces non autorisé", 403);
     }
 
     if (req.body.email) {
@@ -140,7 +131,7 @@ exports.updateUserById = async (req, res) => {
         });
 
         if (existingUser) {
-            throw new Error("L'adresse email est déjà utilisée");
+            throw new APIError("L'adresse email est déjà utilisée", 409);
         }
     }
 
@@ -153,7 +144,7 @@ exports.updateUserById = async (req, res) => {
     );
 
     if (!user) {
-        throw new Error("Utilisateur introuvable");
+        throw new APIError("Utilisateur introuvable", 404);
     }
 
     res.status(200).json(user);
@@ -161,19 +152,18 @@ exports.updateUserById = async (req, res) => {
 
 exports.updateUserPasswordById = async (req, res) => {
     if (req.user._id.toString() !== req.params.id) {
-        // return res.status(403).json();
-        throw new Error("Acces non autorisé");
+        throw new APIError("Acces non autorisé", 403);
     }
 
     const passwordMatch = await req.user.isPasswordCorrect(req.body.password);
     if (!passwordMatch) {
-        // return res.status(403).json();
-        throw new Error("Mot de passe incorrect");
+        throw new APIError("Mot de passe incorrect", 409);
     }
 
     if (req.body.newPassword !== req.body.confirmNewPassword) {
-        throw new Error(
-            "Le mot de passe et sa confirmation doivent être identiques"
+        throw new APIError(
+            "Le mot de passe et sa confirmation doivent être identiques",
+            409
         );
     }
 
@@ -185,8 +175,7 @@ exports.updateUserPasswordById = async (req, res) => {
 
 exports.deleteUserById = async (req, res) => {
     if (req.user._id.toString() !== req.params.id) {
-        // return res.status(403).json();
-        throw new Error("Acces non autorisé");
+        throw new APIError("Acces non autorisé", 403);
     }
 
     await User.findOneAndDelete(req.params.id);
@@ -196,8 +185,7 @@ exports.deleteUserById = async (req, res) => {
 
 exports.deleteGameFromLibrary = async (req, res) => {
     if (req.user._id.toString() !== req.params.userId) {
-        // return res.status(403).json();
-        throw new Error("Acces non autorisé");
+        throw new APIError("Acces non autorisé", 403);
     }
 
     req.user.games.filter((game) => {
@@ -211,8 +199,7 @@ exports.deleteGameFromLibrary = async (req, res) => {
 
 exports.deleteExtensionFromLibrary = async (req, res) => {
     if (req.user._id.toString() !== req.params.userId) {
-        // return res.status(403).json();
-        throw new Error("Acces non autorisé");
+        throw new APIError("Acces non autorisé", 403);
     }
 
     req.user.extensions.filter((extension) => {
