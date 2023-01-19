@@ -1,6 +1,7 @@
 const express = require("express");
 const controller = require("../controllers/rating.controller");
 const { catchErrors } = require("../helpers");
+const auth = require("../middlewares/auth");
 const router = express.Router();
 
 /**
@@ -16,12 +17,12 @@ const router = express.Router();
  * DELETE /:id - Supprime le Rating correspondant à l'id
  */
 
-router.post("/", controller.createRating);
+router.post("/:id/ratings", auth, catchErrors(controller.createRating));
 
-router.get("/:id", controller.getRatingByid);
+router.get("/:id/ratings", catchErrors(controller.getAllRatings));
 
-router.put("/:id", controller.updateRatingById);
+router.put("/:id", auth, catchErrors(controller.updateRatingById));
 
-router.delete("/:id", controller.deleteRatingById);
+router.delete("/:id", auth, catchErrors(controller.deleteRatingById));
 
 module.exports = router;

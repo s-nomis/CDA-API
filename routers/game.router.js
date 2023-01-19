@@ -2,7 +2,7 @@ const express = require("express");
 const controller = require("../controllers/game.controller");
 const auth = require("../middlewares/auth");
 const { catchErrors } = require("../helpers");
-const auth = require("../middlewares/auth");
+
 const router = express.Router();
 
 /**
@@ -21,6 +21,7 @@ const router = express.Router();
 router.post("/", auth, catchErrors(controller.createGame));
 
 router.get("/", catchErrors(controller.getAllGames));
+
 router.get("/:id", catchErrors(controller.getGameByid));
 
 router.put("/:id", auth, catchErrors(controller.updateGameById));
