@@ -6,14 +6,14 @@ exports.createProposal = async (req, res) => {
 
     await proposal.save();
 
-    res.status(201).json(Proposal);
+    res.status(201).json(proposal);
 };
 
 exports.getAllProposal = async (req, res) => {
 
     const proposal = await Proposal.find();
 
-    res.status(200).json(Proposal);
+    res.status(200).json(proposal);
 };
 
 
@@ -23,27 +23,18 @@ exports.getProposalByidGame = async (req, res) => {
         throw new Error("Jeu introuvable");
     }
 
-    res.status(200).json(Proposal);
+    res.status(200).json(proposal);
 };
 
 exports.getProposalByid = async (req, res) => {
-    const proposal = await Proposal.find({id_game:req.params.id_game, _id:req.params.id});
+    const proposal = await Proposal.findById(req.params.id);
     if (!proposal) {
         throw new Error("Jeu introuvable");
     }
 
-    res.status(200).json(Proposal);
+    res.status(200).json(proposal);
 };
         
-exports.getProposalByidCodeBar = async (req, res) => {
-    const proposal = await Proposal.find({barcode:req.params.codeBar_id});
-    if (!proposal) {
-        throw new Error("Jeu introuvable");
-    }
-
-    res.status(200).json(Proposal);
-};
-
 exports.updateProposalById = async (req, res) => {
     const proposal = await Proposal.findByIdAndUpdate(
         req.params.id,

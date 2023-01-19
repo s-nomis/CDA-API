@@ -17,16 +17,16 @@ const router = express.Router();
  * DELETE /:id - Supprime l'Proposal d'un jeu correspondant à l'id
  */
 
-router.post("/", auth , catchErrors(controller.createProposal));
+router.post("/", auth, catchErrors(controller.createProposal));
 
 router.get("/", catchErrors(controller.getAllProposal));
-router.get("/:game_id", catchErrors(controller.getProposalByidGame));
-
 
 router.get("/:id", catchErrors(controller.getProposalByid));
 
+router.get("/game/:id_game", catchErrors(controller.getProposalByidGame));
+
 router.put("/:id", auth, catchErrors(controller.updateProposalById));
 
-router.delete("/:id", auth,  catchErrors(controller.deleteProposalById));
+router.delete("/:id",  auth ,catchErrors(controller.deleteProposalById));
 
 module.exports = router;
