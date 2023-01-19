@@ -18,11 +18,11 @@ const router = express.Router();
 
 router.post("/", auth, controller.createTag);
 
-router.get("/" ,controller.getAllTags);
+router.get("/", controller.getAllTags);
 router.get("/:id", controller.getTagById);
 
 router.put("/:id", auth, controller.updateTagById);
 
-router.delete("/:id",auth,  controller.deleteTagById);
+router.delete("/:id", auth, controller.deleteTagById);
 
 module.exports = router;

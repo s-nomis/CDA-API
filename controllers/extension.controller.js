@@ -1,3 +1,4 @@
+const APIError = require("../errors/APIError");
 const Extension = require("../models/extension.model");
 
 /**
@@ -16,7 +17,7 @@ const Extension = require("../models/extension.model");
  */
 
 exports.createExtension = async (req, res) => {
-    const extension = new Extension({ ...req.body,  });
+    const extension = new Extension({ ...req.body });
 
     await Extension.save();
 
@@ -24,35 +25,26 @@ exports.createExtension = async (req, res) => {
 };
 
 exports.getAllExtension = async (req, res) => {
-
-    const extension = await Extension.find();
+    const extension = await Extension.find({});
 
     res.status(200).json(extension);
 };
 
+exports.getExtensionById = async (req, res) => {
+    const extension = await Extension.findById(req.params.id);
 
-exports.getExtensionByidGame = async (req, res) => {
-    const extension = await Extension.find({game_id:req.params.game_id})
     if (!extension) {
-        throw new Error("Jeu introuvable");
+        throw new APIError("Extension introuvable", 404);
     }
 
     res.status(200).json(extension);
 };
 
-exports.getExtensionByid = async (req, res) => {
-    const extension = await Extension.find({id_game:req.params.id_game, _id:req.params.id});
-    if (!extension) {
-        throw new Error("Jeu introuvable");
-    }
+exports.getExtensionByBarcode = async (req, res) => {
+    const extension = await Extension.find({ barcode: req.params.id });
 
-    res.status(200).json(extension);
-};
-        
-exports.getExtensionByidCodeBar = async (req, res) => {
-    const extension = await Extension.find({barcode:req.params.codeBar_id});
     if (!extension) {
-        throw new Error("Jeu introuvable");
+        throw new APIError("Extension introuvable", 404);
     }
 
     res.status(200).json(extension);
@@ -68,7 +60,7 @@ exports.updateExtensionById = async (req, res) => {
     );
 
     if (!Extension) {
-        throw new Error("Utilisateur introuvable");
+        throw new APIError("Extension introuvable", 404);
     }
 
     res.status(200).json(extension);

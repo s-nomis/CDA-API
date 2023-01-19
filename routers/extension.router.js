@@ -17,16 +17,14 @@ const router = express.Router();
  * DELETE /:id - Supprime l'extension d'un jeu correspondant à l'id
  */
 
-router.post("/", auth , catchErrors(controller.createExtension));
+router.post("/", catchErrors(controller.createExtension));
 
 router.get("/", catchErrors(controller.getAllExtension));
-router.get("/:game_id", catchErrors(controller.getExtensionByidGame));
-router.get("/codeBar/:codeBar_id", catchErrors(controller.getExtensionByidCodeBar));
-
-router.get("/:id", catchErrors(controller.getExtensionByid));
+router.get("/:id", catchErrors(controller.getExtensionById));
+router.get("/barcode/:id", catchErrors(controller.getExtensionByBarcode));
 
 router.put("/:id", auth, catchErrors(controller.updateExtensionById));
 
-router.delete("/:id", auth,  catchErrors(controller.deleteExtensionById));
+router.delete("/:id", auth, catchErrors(controller.deleteExtensionById));
 
 module.exports = router;
