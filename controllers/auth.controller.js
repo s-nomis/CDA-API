@@ -9,8 +9,9 @@ const User = require("../models/user.model");
 exports.login = async (req, res) => {
     const user = await User.findByCredentials(
         req.body.email,
-        req.body.password
+        req.body.password  
     );
+    console.log(req.body.email+" "+ req.body.password )
 
     const token = user.generateAuthToken();
 
