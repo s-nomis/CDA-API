@@ -51,7 +51,7 @@ exports.getGameExtensions = async (req, res) => {
 };
 
 exports.getGameByBarcode = async (req, res) => {
-    const game = await Game.find({ barcode: req.params.id });
+    const game = await Game.findOne({ barcode: req.params.id });
     if (!game) {
         throw new APIError("Jeu introuvable", 404);
     }

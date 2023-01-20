@@ -10,11 +10,10 @@ const extensionSchema = mongoose.Schema(
             lowercase: true,
             trim: true,
         },
-        // Revoir le type de l'image
-        // image: {
-        //     type: String,
-        //     required: true,
-        // },
+        image: {
+            type: mongoose.Types.ObjectId,
+            required: true,
+        },
         tags: [
             {
                 type: mongoose.Types.ObjectId,
@@ -68,7 +67,7 @@ const extensionSchema = mongoose.Schema(
 extensionSchema.virtual("ratings", {
     ref: "Rating",
     localField: "_id",
-    foreignField: "game_id",
+    foreignField: "extension_id",
 });
 
 const Extension = mongoose.model("Extension", extensionSchema);
