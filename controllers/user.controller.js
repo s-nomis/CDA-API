@@ -124,7 +124,8 @@ exports.getUserGames = async (req, res) => {
     if (!user) {
         throw new Error("Utilisateur introuvable");
     }
-    if (user.games.length === 0 ) {
+
+    if (user.games.length === 0) {
         throw new Error("Pas de jeu dans la base");
     }
     res.status(200).json(user);
@@ -136,11 +137,12 @@ exports.getUserExtensions = async (req, res) => {
     if (!user) {
         throw new Error("Utilisateur introuvable");
     }
-    if (user.extensions.length === 0 ) {
+
+    if (user.extensions.length === 0) {
         throw new Error("Pas d'extension dans la base");
     }
     res.status(200).json(user);
-}
+};
 
 exports.updateUserById = async (req, res) => {
     //Check si l'email est déjà utilisé par un autre user

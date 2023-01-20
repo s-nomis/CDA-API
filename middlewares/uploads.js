@@ -19,7 +19,7 @@ const storage = new GridFsStorage({
                     buf.toString("hex") + path.extname(file.originalname);
                 const fileInfo = {
                     filename: filename,
-                    url: `${process.env.APP_URL}/api/v1/files/${filename}`,
+                    // url: `${process.env.APP_URL}/api/v1/files/${filename}`,
                     bucketName: "files",
                 };
                 resolve(fileInfo);
