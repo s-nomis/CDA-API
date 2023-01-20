@@ -22,6 +22,10 @@ const proposalSchema = mongoose.Schema(
         },
         //Image du design de la carte proposé ou image des règles plutot que tout réécrire
         // design: {}
+        // id du jeux lié à l'extension
+        id_game: {
+            type: String,
+        },
     },
     {
         timestamps: true,

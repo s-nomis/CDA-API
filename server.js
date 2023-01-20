@@ -9,6 +9,8 @@ const gameRouter = require("./routers/game.router");
 const extensionRouter = require("./routers/extension.router");
 const tagRouter = require("./routers/tag.router");
 const ratingRouter = require("./routers/rating.router");
+const proposalRouteur = require("./routers/proposal.router")
+const fileRouter = require("./routers/file.router");
 
 dotenv.config();
 
@@ -23,6 +25,8 @@ app.use("/api/games", gameRouter);
 app.use("/api", ratingRouter);
 app.use("/api/extensions", extensionRouter);
 app.use("/api/tags", tagRouter);
+app.use("/api/proposal", proposalRouteur);
+app.use("/api/files", fileRouter);
 
 app.use(errorHandler);
 

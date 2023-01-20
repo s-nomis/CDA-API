@@ -8,11 +8,10 @@ const gameSchema = new mongoose.Schema(
             lowercase: true,
             trim: true,
         },
-        // Revoir le type de l'image
-        // image: {
-        //     type: String,
-        //     required: true,
-        // },
+        image: {
+            type: mongoose.Types.ObjectId,
+            required: true,
+        },
         tags: [
             {
                 type: mongoose.Types.ObjectId,

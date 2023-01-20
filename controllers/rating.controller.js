@@ -88,7 +88,6 @@ exports.updateRatingById = async (req, res) => {
             new: "true",
         }
     );
-
     if (!Rating) {
         throw new Error("Utilisateur introuvable");
     }
