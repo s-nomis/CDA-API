@@ -124,6 +124,7 @@ exports.getUserGames = async (req, res) => {
     if (!user) {
         throw new Error("Utilisateur introuvable");
     }
+
     if (user.games.length === 0) {
         throw new Error("Pas de jeu dans la base");
     }
@@ -136,6 +137,7 @@ exports.getUserExtensions = async (req, res) => {
     if (!user) {
         throw new Error("Utilisateur introuvable");
     }
+
     if (user.extensions.length === 0) {
         throw new Error("Pas d'extension dans la base");
     }

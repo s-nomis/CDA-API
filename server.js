@@ -13,6 +13,7 @@ const tagRouter = require("./routers/tag.router");
 const ratingRouter = require("./routers/rating.router");
 const proposalRouteur = require("./routers/proposal.router");
 const fileRouter = require("./routers/file.router");
+const affiliatesLinkRouter = require("./routers/affiliatesLink.router");
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use("/api/extensions", extensionRouter);
 app.use("/api/tags", tagRouter);
 app.use("/api/proposal", proposalRouteur);
 app.use("/api/files", fileRouter);
+app.use("/api/affiliatesLinks", affiliatesLinkRouter);
 
 app.use(errorHandler);
 

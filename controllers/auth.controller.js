@@ -34,7 +34,6 @@ exports.login = async (req, res) => {
         req.body.email,
         req.body.password
     );
-    console.log(req.body.email + " " + req.body.password);
 
     const token = user.generateAuthToken();
 
