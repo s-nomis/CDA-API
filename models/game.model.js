@@ -65,6 +65,7 @@ const gameSchema = new mongoose.Schema(
         },
     },
     {
+        toJSON: { virtuals: true },
         timestamps: true,
     }
 );
