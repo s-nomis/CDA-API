@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const fs = require("fs");
 const { errorHandler } = require("./middlewares/errorHandler");
+const swaggerUi = require("swagger-ui-express");
 
 const authRouter = require("./routers/auth.router");
 const userRouter = require("./routers/user.router");
@@ -9,17 +11,21 @@ const gameRouter = require("./routers/game.router");
 const extensionRouter = require("./routers/extension.router");
 const tagRouter = require("./routers/tag.router");
 const ratingRouter = require("./routers/rating.router");
-const proposalRouteur = require("./routers/proposal.router")
+const proposalRouteur = require("./routers/proposal.router");
 const fileRouter = require("./routers/file.router");
 const affiliatesLinkRouter = require("./routers/affiliatesLink.router");
 
 dotenv.config();
 
+const swaggerFile = JSON.parse(fs.readFileSync("./swagger-output.json"));
 const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
 
+// const specs = swaggerJsdoc(options);
+
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/api", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/games", gameRouter);

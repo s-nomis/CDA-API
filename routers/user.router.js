@@ -26,7 +26,15 @@ const router = express.Router();
  * DELETE /:id/extensions/:id - Supprime l'extension correspondant à l'id de la ludothèque de l'utilisateur
  */
 
-router.post("/", catchErrors(controller.createUser));
+router.post(
+    "/",
+    catchErrors(controller.createUser)
+    /*
+	#swagger.tags = ['Users']
+	#swagger.responses[200] = { description: 'Return all cars' }
+	#swagger.responses[401] = { description: 'Error : unauthorized access' }
+*/
+);
 router.post(
     "/:userId/games/:gameId",
     auth,
